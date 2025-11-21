@@ -1,0 +1,31 @@
+﻿'use client';
+
+/**
+ * react-idle-timer exports as CommonJS. Import the default export and
+ * destructure the function we need to avoid runtime ESM/CommonJS interop issues
+ * when the serverless function runs on Vercel.
+ *
+ * This file is the full replacement for src/__create/useDevServerHeartbeat.ts
+ */
+
+import pkg from 'react-idle-timer';
+const { useIdleTimer } = (pkg as any) || pkg;
+
+export function useDevServerHeartbeat() {
+  useIdleTimer({
+    throttle: 60_000 * 3,
+    timeout: 60_000,
+    onAction: () => {
+      // HACK: at time of writing, we run the dev server on a proxy url that
+      // when requested, ensures that the dev server's life is extended. If
+      // the user is using a page or is active in it in the app, but when the
+      // user has popped out their preview, they no longer can rely on the
+      // app to do this. This hook ensures it stays alive.
+      fetch('/', {
+        method: 'GET',
+      }).catch((error) => {
+        // this is a no-op, we just want to keep the dev server alive
+      });
+    },
+  });
+}
