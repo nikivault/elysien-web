@@ -4,7 +4,8 @@
     "type":  "module",
     "scripts":  {
                     "dev":  "react-router dev",
-                    "typecheck":  "react-router typegen \u0026\u0026 tsc --noEmit"
+                    "typecheck":  "react-router typegen \u0026\u0026 tsc --noEmit",
+                    "build":  "npx react-router build"
                 },
     "dependencies":  {
                          "@auth/core":  "^0.37.2",
