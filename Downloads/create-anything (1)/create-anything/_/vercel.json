@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "functions": {
+    "api/server.js": {
+      "runtime": "nodejs18.x",
+      "includeFiles": [
+        "apps/web/build/**"
+      ]
+    }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/server.js" }
+  ]
+}
